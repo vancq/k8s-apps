@@ -24,6 +24,13 @@ spec:
   - host: nginx.local
     http:
       paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: demo-service
+            port:
+              number: 8080
       - path: /
         pathType: Prefix
         backend:
