@@ -52,18 +52,14 @@ print_info "Starting deployment of applications to ArgoCD..."
 print_info "Deploying Ingress NGINX Controller to ArgoCD..."
 kubectl apply -f ingress-nginx/argocd-application.yaml
 
-# Deploy nginx application to ArgoCD
-print_info "Deploying Nginx application to ArgoCD..."
-kubectl apply -f nginx/argocd-application.yaml
-
 # Deploy demo-service application to ArgoCD
 print_info "Deploying Demo Service application to ArgoCD..."
 kubectl apply -f demo-service/argocd-application.yaml
 
 print_info "All applications deployed to ArgoCD successfully!"
 
-# Wait for application to be synced
-print_info "Waiting for nginx application to sync..."
+# Wait for applications to be synced
+print_info "Waiting for applications to sync..."
 sleep 5
 
 # Display ArgoCD application status
@@ -74,9 +70,13 @@ echo ""
 print_info "Deployment completed!"
 echo ""
 print_info "To check application sync status:"
-echo "  kubectl get application nginx -n argocd"
+echo "  kubectl get application -n argocd"
 echo ""
-print_info "To access nginx after it's synced, use port-forwarding:"
-echo "  kubectl port-forward -n dev svc/nginx 8080:80"
+print_info "To access demo-service, use port-forwarding:"
+echo "  kubectl port-forward -n dev svc/demo-service 8080:8080"
+echo ""
+print_info "Or use ingress controller port-forward:"
+echo "  kubectl port-forward -n ingress-nginx service/ingress-nginx-controller 8080:80"
+echo "  Then access: http://app.local:8080/api"
 echo ""
 

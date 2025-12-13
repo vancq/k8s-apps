@@ -45,10 +45,6 @@ fi
 
 print_info "Starting cleanup of infrastructure services..."
 
-# Delete nginx
-print_info "Deleting Nginx..."
-kubectl delete -f nginx/deployment.yaml --ignore-not-found=true
-
 # Ask about namespace deletion
 echo ""
 read -p "Do you want to delete the namespace 'dev'? This will remove any remaining resources. (yes/no): " delete_ns
