@@ -48,6 +48,10 @@ fi
 
 print_info "Starting deployment of applications to ArgoCD..."
 
+# Deploy ingress-nginx controller to ArgoCD
+print_info "Deploying Ingress NGINX Controller to ArgoCD..."
+kubectl apply -f ingress-nginx/argocd-application.yaml
+
 # Deploy nginx application to ArgoCD
 print_info "Deploying Nginx application to ArgoCD..."
 kubectl apply -f nginx/argocd-application.yaml
