@@ -31,13 +31,6 @@ spec:
             name: demo-service
             port:
               number: 8080
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: nginx
-            port:
-              number: 80
 ---
 apiVersion: apps/v1
 kind: Deployment
