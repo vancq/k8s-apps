@@ -26,6 +26,8 @@ spec:
       labels:
         app: demo-service
     spec:
+      imagePullSecrets:
+      - name: ghcr-secret
       containers:
       - name: demo-service
         image: ghcr.io/vancq/demo-service:latest
