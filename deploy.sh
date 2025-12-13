@@ -52,6 +52,10 @@ print_info "Starting deployment of applications to ArgoCD..."
 print_info "Deploying Nginx application to ArgoCD..."
 kubectl apply -f nginx/argocd-application.yaml
 
+# Deploy demo-service application to ArgoCD
+print_info "Deploying Demo Service application to ArgoCD..."
+kubectl apply -f demo-service/argocd-application.yaml
+
 print_info "All applications deployed to ArgoCD successfully!"
 
 # Wait for application to be synced

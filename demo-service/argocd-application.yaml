@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo-service
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/vancq/k8s-apps.git
+    targetRevision: HEAD
+    path: demo-service
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
