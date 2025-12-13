@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Kubernetes Deployment Script for Infrastructure Services
-# This script deploys all infrastructure services to Kubernetes
+# ArgoCD Deployment Script for Infrastructure Services
+# This script deploys all infrastructure services to ArgoCD
 
 set -e
 
@@ -40,36 +40,35 @@ if ! kubectl cluster-info &> /dev/null; then
     exit 1
 fi
 
-print_info "Starting deployment of infrastructure services..."
+# Check if ArgoCD namespace exists
+if ! kubectl get namespace argocd &> /dev/null; then
+    print_error "ArgoCD namespace not found. Please install ArgoCD first."
+    exit 1
+fi
 
-# Create namespace
-print_info "Creating namespace..."
-kubectl apply -f namespace.yaml
+print_info "Starting deployment of applications to ArgoCD..."
 
-# Wait a bit for namespace to be ready
-sleep 2
+# Deploy nginx application to ArgoCD
+print_info "Deploying Nginx application to ArgoCD..."
+kubectl apply -f nginx/argocd-application.yaml
 
-# Deploy nginx
-print_info "Deploying Nginx..."
-kubectl apply -f nginx/deployment.yaml
+print_info "All applications deployed to ArgoCD successfully!"
 
-print_info "All services deployed successfully!"
+# Wait for application to be synced
+print_info "Waiting for nginx application to sync..."
+sleep 5
 
-# Wait for all deployments to be ready
-print_info "Waiting for all deployments to be ready..."
-kubectl wait --for=condition=available --timeout=300s deployment --all -n dev || print_warning "Some deployments may still be starting..."
-
-# Display status
-print_info "Deployment Status:"
-kubectl get all -n dev
-
-print_info "PersistentVolumeClaims:"
-kubectl get pvc -n dev
+# Display ArgoCD application status
+print_info "ArgoCD Application Status:"
+kubectl get application -n argocd
 
 echo ""
 print_info "Deployment completed!"
 echo ""
-print_info "To access nginx, use port-forwarding:"
+print_info "To check application sync status:"
+echo "  kubectl get application nginx -n argocd"
+echo ""
+print_info "To access nginx after it's synced, use port-forwarding:"
 echo "  kubectl port-forward -n dev svc/nginx 8080:80"
 echo ""
 
