@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/your-org/k8s-apps.git
+    repoURL: https://github.com/vancq/k8s-apps.git
     targetRevision: HEAD
     path: gateway-service/k8s
   destination:
