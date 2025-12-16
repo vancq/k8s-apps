@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: gateway-service
-        image: ghcr.io/vancq/demo-service:latest
+        image: ghcr.io/vancq/gateway-service:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
